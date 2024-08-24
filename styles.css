@@ -1,4 +1,8 @@
 /* Global Styles */
+html {
+    scroll-behavior: smooth;
+}
+
 body {
     font-family: 'Open Sans', sans-serif;
     margin: 0;
@@ -40,16 +44,24 @@ header nav ul li a {
 
 .hero-section {
     height: 100vh;
-    background-color: #D3D3D3;
+    background-image: url('https://c4.wallpaperflare.com/wallpaper/308/115/637/rgb-water-cooling-pc-build-nvidia-geforce-hd-wallpaper-preview.jpg'); /* Replace with your image URL */
+    background-size: cover;
+    background-position: center;
     display: flex;
     justify-content: center;
     align-items: center;
     text-align: center;
+    color: #FFFFFF; /* Ensure text is readable on top of the image */
+}
+
+.hero-content {
+    background: rgba(0, 0, 0, 0.5); /* Semi-transparent background for better text readability */
+    padding: 20px;
+    border-radius: 10px;
 }
 
 .hero-content h1 {
     font-size: 48px;
-    color: #2F2F2F;
     margin-bottom: 20px;
 }
 
