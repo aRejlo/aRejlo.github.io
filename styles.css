@@ -1,0 +1,209 @@
+/* Global Styles */
+body {
+    font-family: 'Open Sans', sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #FFFFFF;
+    color: #000000;
+}
+
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #2F2F2F;
+    color: #FFFFFF;
+}
+
+header .logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+header nav ul {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+}
+
+header nav ul li {
+    margin-left: 20px;
+}
+
+header nav ul li a {
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.hero-section {
+    height: 100vh;
+    background-color: #D3D3D3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+}
+
+.hero-content h1 {
+    font-size: 48px;
+    color: #2F2F2F;
+    margin-bottom: 20px;
+}
+
+.hero-content .cta-button {
+    padding: 10px 20px;
+    background-color: #4A90E2;
+    color: #FFFFFF;
+    text-decoration: none;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.content-section {
+    padding: 50px;
+    background-color: #F8F8F8;
+    text-align: center;
+}
+
+.content-section h2 {
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.team {
+    display: flex;
+    justify-content: center;
+    gap: 40px;
+}
+
+.team-member {
+    text-align: center;
+}
+
+.team-member img {
+    width: 150px;
+    border-radius: 50%;
+    margin-bottom: 10px;
+}
+
+.service {
+    margin-bottom: 30px;
+}
+
+.service h3 {
+    font-size: 24px;
+    color: #2F2F2F;
+}
+
+.portfolio-gallery {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+}
+
+.portfolio-item {
+    width: 300px;
+}
+
+.portfolio-item img {
+    width: 100%;
+    border-radius: 10px;
+}
+
+#contact-form {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    width: 50%;
+    margin: 0 auto;
+}
+
+#contact-form input, #contact-form textarea {
+    padding: 10px;
+    border: 1px solid #2F2F2F;
+    border-radius: 5px;
+}
+
+#contact-form button {
+    padding: 10px 20px;
+    background-color: #4A90E2;
+    color: #FFFFFF;
+    border: none;
+    font-weight: bold;
+    border-radius: 5px;
+}
+
+.contact-info {
+    margin-top: 30px;
+    text-align: center;
+}
+
+footer {
+    background-color: #2F2F2F;
+    color: #FFFFFF;
+    text-align: center;
+    padding: 20px;
+    margin-top: 50px;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    header nav ul {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 10px;
+    }
+
+    .hero-content h1 {
+        font-size: 32px;
+    }
+
+    .team {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    .portfolio-gallery {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    #contact-form {
+        width: 90%;
+    }
+}
+
+@media (max-width: 480px) {
+    .hero-content h1 {
+        font-size: 24px;
+    }
+
+    .hero-content .cta-button {
+        padding: 8px 16px;
+        font-size: 14px;
+    }
+
+    .content-section {
+        padding: 30px;
+    }
+
+    .content-section h2 {
+        font-size: 28px;
+    }
+
+    .team-member img {
+        width: 120px;
+    }
+
+    .portfolio-item {
+        width: 100%;
+    }
+}
