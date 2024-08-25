@@ -91,14 +91,15 @@
         </div>
     </section>
 
+
     <!-- Contact Section -->
     <section id="contact" class="content-section">
         <h2>Contact Us</h2>
-        <form action="mailto:aleks.nwe@gmail.com" method="post" enctype="text/plain">
-            <input type="text" placeholder="Name" required>
-            <input type="email" placeholder="Email" required>
-            <input type="text" placeholder="Subject" required>
-            <textarea placeholder="Message" required></textarea>
+        <form id="contact-form" action="mailto:aleks.nwe@gmail.com" method="post" enctype="text/plain">
+            <input type="text" id="name" name="name" placeholder="Name" required>
+            <input type="email" id="email" name="email" placeholder="Email" required>
+            <input type="text" id="subject" name="subject" placeholder="Subject" required>
+            <textarea id="message" name="message" placeholder="Message" required></textarea>
             <button type="submit">Send Message</button>
         </form>
         <div class="contact-info">
