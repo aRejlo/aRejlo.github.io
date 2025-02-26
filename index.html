@@ -54,6 +54,46 @@
 
         button:hover { transform: translateY(-2px); box-shadow: 0 6px 8px rgba(0,0,0,0.2); }
 
+        /* Hamburger Icon */
+        #hamburger {
+            display: none; /* Hidden by default */
+            background: none;
+            border: none;
+            color: var(--secondary);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        /* Responsive Navbar */
+        @media (max-width: 768px) {
+            #hamburger {
+                display: block; /* Show hamburger on smaller screens */
+            }
+
+            .nav-buttons {
+                display: none; /* Hide nav buttons by default on smaller screens */
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: rgba(255, 255, 255, 0.95);
+                padding: 1rem;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+                backdrop-filter: blur(10px);
+            }
+
+            .nav-buttons.active {
+                display: flex; /* Show nav buttons when active */
+            }
+
+            .nav-buttons button {
+                width: 100%;
+                text-align: left;
+                margin: 0.5rem 0;
+            }
+        }
+
         .hero {
             background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1483982258113-b72862e6cff6') center/cover;
             color: white;
@@ -466,13 +506,14 @@
 <body>
     <nav>
         <div>Luxury Store | aRejlo website</div>
-        <div class="nav-buttons">
+        <div class="nav-buttons" id="navButtons">
             <button onclick="showPage('homePage')">Home</button>
             <button onclick="showPage('shopPage')">Shop</button>
             <button onclick="showPage('aboutPage')">About</button>
             <button onclick="showPage('cartPage')">Cart (<span id="cartCount">0</span>)</button>
             <button id="authButton" onclick="handleAuth()">Login</button>
         </div>
+        <button id="hamburger" aria-label="Toggle navigation">&#9776;</button>
     </nav>
 
     <!-- Home Page -->
@@ -837,6 +878,22 @@
                 </div>
             `).join('');
         }
+
+        // Toggle Navbar on Mobile
+        document.getElementById('hamburger').addEventListener('click', function() {
+            const navButtons = document.getElementById('navButtons');
+            navButtons.classList.toggle('active');
+        });
+
+        // Close Navbar when a link is clicked (optional)
+        document.querySelectorAll('.nav-buttons button').forEach(button => {
+            button.addEventListener('click', () => {
+                const navButtons = document.getElementById('navButtons');
+                if (navButtons.classList.contains('active')) {
+                    navButtons.classList.remove('active');
+                }
+            });
+        });
 
         // Initialize
         auth.updateUI();
