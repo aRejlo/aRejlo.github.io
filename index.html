@@ -3,116 +3,846 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>aRejlo website</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="icon" href="https://yt3.ggpht.com/xtD0_7mVT_UCA6viT2Byv1XbA6afuQWQHOHtglkQAQL9yZ7Ku3azfkTTAztWAfeiMN57T1sWMg=s88-c-k-c0x00ffffff-no-rj" type="image/x-icon">
+    <meta name="description" content="Luxury Store - Premium Designer Accessories & Timepieces">
+    <title>Luxury Store | aRejlo website</title>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #061f55;
+            --accent: #9b9213;
+            --light: #59636d;
+            --success: #27ae60;
+        }
 
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        body {
+            background: var(--light);
+            min-height: 100vh;
+        }
+
+        nav {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 1rem 2rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            z-index: 1000;
+            backdrop-filter: blur(10px);
+        }
+
+        .nav-buttons { display: flex; gap: 1.5rem; }
+
+        button {
+            background: var(--secondary);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+
+        button:hover { transform: translateY(-2px); box-shadow: 0 6px 8px rgba(0,0,0,0.2); }
+
+        .hero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1483982258113-b72862e6cff6') center/cover;
+            color: white;
+            padding: 4rem 1rem;
+            text-align: center;
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 2rem;
+            padding: 2rem;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .product-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transition: transform 0.3s ease;
+        }
+
+        .product-card:hover { transform: translateY(-5px); }
+
+        .product-image {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .product-info { padding: 1.5rem; }
+
+        .page { display: none; }
+        .active { display: block; }
+
+        .cart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1rem;
+            margin: 1rem 0;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        form {
+            max-width: 500px;
+            margin: 2rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        .success-checkmark {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: var(--success);
+            margin: 0 auto;
+            position: relative;
+            animation: checkmark 0.6s ease-in-out;
+        }
+
+        .success-checkmark::before {
+            content: "✓";
+            position: absolute;
+            color: white;
+            font-size: 2.5rem;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Auth Pages Styling */
+        .auth-container {
+            max-width: 500px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .auth-form {
+            background: white;
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        .auth-heading {
+            color: var(--primary);
+            text-align: center;
+            font-size: 2.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1.2rem;
+            margin-bottom: 2rem;
+        }
+
+        .auth-form input {
+            width: 100%;
+            padding: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .auth-form input:focus {
+            border-color: var(--secondary);
+            outline: none;
+            box-shadow: 0 0 0 3px rgba(52, 152, 219, 0.1);
+        }
+
+        .auth-button {
+            width: 100%;
+            padding: 1rem;
+            background: var(--secondary);
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(52, 152, 219, 0.3);
+        }
+
+        .auth-error {
+            color: var(--accent);
+            text-align: center;
+            margin: 1rem 0;
+            font-weight: 500;
+        }
+
+        .auth-alt {
+            text-align: center;
+            margin-top: 1.5rem;
+            color: #666;
+        }
+
+        .auth-alt a {
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        /* Payment Page Specific */
+        .payment-summary {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        #paymentForm input {
+            font-family: monospace;
+        }
+
+        #cardNumber {
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+        }
+
+        @keyframes checkmark {
+            0% { transform: scale(0); }
+            80% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+
+        /* About Section */
+        .about {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        .about h2 {
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .about p {
+            color: #666;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        /* Contact Section */
+        .contact {
+            max-width: 800px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .contact h2 {
+            text-align: center;
+            color: var(--primary);
+            font-size: 2.5rem;
+            margin-bottom: 2rem;
+        }
+
+        #contact-form {
+            background: white;
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        #contact-form input,
+        #contact-form textarea {
+            width: 100%;
+            padding: 0.8rem;
+            margin-bottom: 1rem;
+            border: 2px solid #eee;
+            border-radius: 8px;
+            transition: border-color 0.3s ease;
+        }
+
+        #contact-form input:focus,
+        #contact-form textarea:focus {
+            border-color: var(--secondary);
+            outline: none;
+        }
+
+        #contact-form textarea {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--primary);
+            color: white;
+            padding: 3rem 2rem;
+            margin-top: 4rem;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 2rem;
+        }
+
+        .newsletter h3,
+        .social-media h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .newsletter form {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .newsletter input {
+            flex: 1;
+            padding: 0.8rem;
+            border: none;
+            border-radius: 25px;
+        }
+
+        .newsletter button {
+            background: var(--secondary);
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 25px;
+            color: white;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+
+        .newsletter button:hover {
+            transform: translateY(-2px);
+        }
+
+        .social-media {
+            text-align: center;
+        }
+
+        .social-media a {
+            color: white;
+            text-decoration: none;
+            margin: 0 1rem;
+            transition: color 0.3s ease;
+        }
+
+        .social-media a:hover {
+            color: var(--secondary);
+        }
+
+        .legal {
+            text-align: center;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+
+        .legal a {
+            color: var(--secondary);
+            text-decoration: none;
+            margin: 0 0.5rem;
+        }
+
+        /* New Multi-Page Styles */
+        .page-header {
+            text-align: center;
+            padding: 4rem 1rem;
+            background: var(--primary);
+            color: white;
+        }
+
+        .home-featured {
+            max-width: 1200px;
+            margin: 4rem auto;
+            padding: 2rem;
+        }
+
+        .featured-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .featured-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            text-align: center;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+        }
+
+        #shopHero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1483982258113-b72862e6cff6') center/cover;
+        }
+
+        #homeHero {
+            background: linear-gradient(rgba(0,0,0,0.7), rgba(0,0,0,0.7)), url('https://images.unsplash.com/photo-1524805444758-089113d48a6d') center/cover;
+        }
+
+        @media (max-width: 768px) {
+            .about {
+                margin: 2rem 1rem;
+                padding: 1.5rem;
+            }
+            
+            .contact {
+                padding: 1rem;
+            }
+            
+            .footer-content {
+                text-align: center;
+            }
+            
+            .newsletter form {
+                flex-direction: column;
+            }
+
+            .auth-container {
+                padding: 1rem;
+                margin: 2rem auto;
+            }
+            
+            .auth-form {
+                padding: 1.5rem;
+            }
+            
+            .auth-heading {
+                font-size: 1.8rem;
+            }
+
+            .form-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            #expiryDate,
+            #cvv {
+                width: 100%;
+            }
+        }
+    </style>
 </head>
 <body>
-    <!-- Header -->
-    <header>
-        <div class="logo">aRejlo website</div>
-        <nav>
-            <ul>
-                <li><a href="#home">Home</a></li>
-                <li><a href="#about">About</a></li>
-                <li><a href="#services">Services</a></li>
-                <li><a href="#portfolio">Portfolio</a></li>
-                <li><a href="#contact">Contact</a></li>
-            </ul>
-        </nav>
-    </header>
-
-    <!-- Home Section -->
-    <section id="home" class="hero-section">
-        <div class="hero-content">
-            <h1>Innovative Computer Solutions for Modern Businesses</h1>
-            <a href="#about" class="cta-button">Learn More</a>
+    <nav>
+        <div>Luxury Store | aRejlo website</div>
+        <div class="nav-buttons">
+            <button onclick="showPage('homePage')">Home</button>
+            <button onclick="showPage('shopPage')">Shop</button>
+            <button onclick="showPage('aboutPage')">About</button>
+            <button onclick="showPage('cartPage')">Cart (<span id="cartCount">0</span>)</button>
+            <button id="authButton" onclick="handleAuth()">Login</button>
         </div>
-    </section>
+    </nav>
 
-    <!-- About Section -->
-    <section id="about" class="content-section">
-        <h2>About Us</h2>
-        <p>We are experts in providing top-notch computer solutions tailored to meet the needs of modern businesses.</p>
-        <div class="team">
-            <div class="team-member">
-                <img src="https://yt3.ggpht.com/xtD0_7mVT_UCA6viT2Byv1XbA6afuQWQHOHtglkQAQL9yZ7Ku3azfkTTAztWAfeiMN57T1sWMg=s108-c-k-c0x00ffffff-no-rj" alt="Team Member 1">
-                <h3>aRejlo</h3>
-                <p>CEO</p>
+    <!-- Home Page -->
+    <div id="homePage" class="page active">
+        <section class="hero" id="homeHero">
+            <h1>Timeless Elegance</h1>
+            <p>Experience luxury craftsmanship perfected over generations</p>
+        </section>
+
+        <section class="home-featured">
+            <h2 class="page-header">Featured Collection</h2>
+            <div class="featured-grid">
+                <div class="featured-card">
+                    <h3>New Arrivals</h3>
+                    <p>Discover our latest additions</p>
+                    <button onclick="showPage('shopPage')">Explore</button>
+                </div>
+                <div class="featured-card">
+                    <h3>Best Sellers</h3>
+                    <p>Customer favorites</p>
+                    <button onclick="showPage('shopPage')">View Collection</button>
+                </div>
+                <div class="featured-card">
+                    <h3>Limited Editions</h3>
+                    <p>Exclusive pieces</p>
+                    <button onclick="showPage('shopPage')">Discover</button>
+                </div>
             </div>
-            <div class="team-member">
-                <img src="https://yt3.ggpht.com/xtD0_7mVT_UCA6viT2Byv1XbA6afuQWQHOHtglkQAQL9yZ7Ku3azfkTTAztWAfeiMN57T1sWMg=s108-c-k-c0x00ffffff-no-rj" alt="Team Member 1">
-                <h3>aRejlo</h3>
-                <p>HR</p>
+        </section>
+
+        <footer>
+            <div class="footer-content">
+                <div class="newsletter">
+                    <h3>Subscribe to Our Newsletter</h3>
+                    <form id="newsletter-form">
+                        <input type="email" name="newsletter-email" placeholder="Your Email" required>
+                        <button type="submit">Subscribe</button>
+                    </form>
+                </div>
+                <div class="social-media">
+                    <h3>Follow Us</h3>
+                    <a href="https://www.youtube.com/@arejlo">Youtube</a>
+                    <a href="https://www.instagram.com/arejlo_/">Instagram</a>
+                    <a href="https://www.tiktok.com/@arejlo">Tik Tok</a>
+                </div>
             </div>
-            <div class="team-member">
-                <img src="https://yt3.ggpht.com/xtD0_7mVT_UCA6viT2Byv1XbA6afuQWQHOHtglkQAQL9yZ7Ku3azfkTTAztWAfeiMN57T1sWMg=s108-c-k-c0x00ffffff-no-rj" alt="Team Member 1">
-                <h3>aRejlo</h3>
-                <p>CTO</p>
+            <div class="legal">
+                <a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a>
             </div>
-            <div class="team-member">
-                <img src="https://yt3.ggpht.com/xtD0_7mVT_UCA6viT2Byv1XbA6afuQWQHOHtglkQAQL9yZ7Ku3azfkTTAztWAfeiMN57T1sWMg=s108-c-k-c0x00ffffff-no-rj" alt="Team Member 1">
-                <h3>aRejlo</h3>
-                <p>CMO</p>
+        </footer>
+    </div>
+
+    <!-- Shop Page -->
+    <div id="shopPage" class="page">
+        <section class="hero" id="shopHero">
+            <h1>Luxury Redefined</h1>
+            <p>Discover our curated collection of premium designer accessories</p>
+        </section>
+
+        <div class="product-grid" id="productGrid"></div>
+    </div>
+
+    <!-- About Page -->
+    <div id="aboutPage" class="page">
+        <section class="page-header">
+            <h1>About Us</h1>
+            <p>Our legacy of craftsmanship and innovation</p>
+        </section>
+
+        <section class="about">
+            <div class="about-content">
+                <h2>Our Story</h2>
+                <p>Founded in 2020, our brand is dedicated to creating watches that combine timeless elegance with modern technology. Each piece is crafted with precision and care, ensuring it stands the test of time.</p>
+                
+                <h2>Our Philosophy</h2>
+                <p>We believe in sustainable luxury - creating heirloom-quality pieces that transcend trends while maintaining ethical production practices.</p>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Services Section -->
-    <section id="services" class="content-section">
-        <h2>Our Services</h2>
-        <div class="service">
-            <h3>IT Consulting</h3>
-            <p>We provide expert IT consulting services to optimize your business operations.</p>
-        </div>
-        <div class="service">
-            <h3>Network Solutions</h3>
-            <p>Our team designs and implements reliable network solutions.</p>
-        </div>
-        <div class="service">
-            <h3>Hardware Support</h3>
-            <p>We offer comprehensive hardware support for all your needs.</p>
-        </div>
-    </section>
+        <section class="contact">
+            <h2>Contact Us</h2>
+            <form id="contact-form" action="mailto:arejlo.work@gmail.com" method="post" enctype="text/plain">
+                <input type="text" id="name" name="name" placeholder="Name" required>
+                <input type="email" id="email" name="email" placeholder="Email" required>
+                <input type="text" id="subject" name="subject" placeholder="Subject" required>
+                <textarea id="message" name="message" placeholder="Message" required></textarea>
+                <button type="submit">Send Message</button>
+            </form>
+        </section>
+    </div>
 
-    <!-- Portfolio Section -->
-    <section id="portfolio" class="content-section">
-        <h2>Our Portfolio</h2>
-        <div class="portfolio-gallery">
-            <div class="portfolio-item">
-                <img src="https://ireland.apollo.olxcdn.com/v1/files/5z7gpb5rtyor-PL/image;s=1000x700" alt="Project 1">
-                <h3>first Custom Built Computer</h3>
-            </div>
-            <div class="portfolio-item">
-                <img src="https://ireland.apollo.olxcdn.com/v1/files/75685eexolwl3-PL/image;s=1000x700" alt="Project 2">
-                <h3>Office Setup</h3>
-            </div>
+    <!-- Cart Page -->
+    <div id="cartPage" class="page">
+        <div style="max-width: 1200px; margin: 2rem auto; padding: 0 2rem;">
+            <h1>Your Shopping Cart</h1>
+            <div id="cartItems"></div>
+            <div id="cartTotal" style="text-align: right; margin: 2rem 0;"></div>
+            <button onclick="checkout()" style="width: 100%; padding: 1rem;">Proceed to Checkout</button>
         </div>
-    </section>
+    </div>
 
-
-    <!-- Contact Section -->
-    <section id="contact" class="content-section">
-        <h2>Contact Us</h2>
-        <form id="contact-form" action="mailto:arejlo.work@gmail.com" method="post" enctype="text/plain">
-            <input type="text" id="name" name="name" placeholder="Name" required>
-            <input type="email" id="email" name="email" placeholder="Email" required>
-            <input type="text" id="subject" name="subject" placeholder="Subject" required>
-            <textarea id="message" name="message" placeholder="Message" required></textarea>
-            <button type="submit">Send Message</button>
-        </form>
-        <div class="contact-info">
-            <p>Email: arejlo.work@gmail.com</p>
-            <p>Phone: +694 062 955</p>
+    <!-- Auth Pages -->
+    <div id="loginPage" class="page">
+        <div class="auth-container">
+            <form id="loginForm" class="auth-form">
+                <h1 class="auth-heading">Welcome Back</h1>
+                <div id="loginError" class="auth-error"></div>
+                <div class="form-group">
+                    <input type="text" id="username" placeholder="Username" required>
+                    <input type="password" id="password" placeholder="Password" required>
+                </div>
+                <button type="submit" class="auth-button">Login</button>
+                <p class="auth-alt">New customer? <a href="#" onclick="showPage('signupPage')">Create account</a></p>
+            </form>
         </div>
-    </section>
+    </div>
 
-    <!-- Footer -->
-    <footer>
-        <p>&copy; 2024 aRejlo. All rights reserved.</p>
-    </footer>
+    <div id="signupPage" class="page">
+        <div class="auth-container">
+            <form id="signupForm" class="auth-form">
+                <h1 class="auth-heading">Create Account</h1>
+                <div id="signupError" class="auth-error"></div>
+                <div class="form-group">
+                    <input type="text" id="newUsername" placeholder="Username" required>
+                    <input type="password" id="newPassword" placeholder="Password" required>
+                    <input type="password" id="confirmPassword" placeholder="Confirm Password" required>
+                </div>
+                <button type="submit" class="auth-button">Sign Up</button>
+            </form>
+        </div>
+    </div>
 
-    <script src="scripts.js"></script>
+    <!-- Payment Page -->
+    <div id="paymentPage" class="page">
+        <div class="auth-container">
+            <form id="paymentForm" class="auth-form">
+                <h1 class="auth-heading">Payment Details</h1>
+                <div id="paymentItems" class="payment-summary"></div>
+                <div id="paymentError" class="auth-error"></div>
+                
+                <div class="form-group">
+                    <input type="text" id="cardNumber" placeholder="Card Number" required>
+                    <div class="form-row">
+                        <input type="text" id="expiryDate" placeholder="MM/YY" required>
+                        <input type="text" id="cvv" placeholder="CVV" required>
+                    </div>
+                </div>
+                
+                <button type="submit" class="auth-button">Complete Purchase</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Product Data
+        const products = [
+            {
+                id: 1,
+                name: "Chronograph Master",
+                price: 2599.99,
+                image: "https://images.unsplash.com/photo-1524805444758-089113d48a6d",
+                stock: 8,
+                sold: 0
+            },
+            {
+                id: 2,
+                name: "Executive Leather Briefcase",
+                price: 899.99,
+                image: "https://images.unsplash.com/photo-1584917865442-de89df76afd3",
+                stock: 5,
+                sold: 0
+            }
+        ];
+
+        // Core System
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        let currentUser = localStorage.getItem('currentUser');
+        let sales = JSON.parse(localStorage.getItem('sales')) || [];
+
+        // Auth System
+        const auth = {
+            isLoggedIn: () => currentUser !== null,
+            login: (username) => {
+                currentUser = username;
+                localStorage.setItem('currentUser', username);
+                updateAuthUI();
+            },
+            logout: () => {
+                currentUser = null;
+                localStorage.removeItem('currentUser');
+                updateAuthUI();
+                showPage('homePage');
+            },
+            updateUI: () => {
+                const authButton = document.getElementById('authButton');
+                authButton.textContent = auth.isLoggedIn() ? 'Logout' : 'Login';
+                authButton.onclick = auth.isLoggedIn() ? auth.logout : () => showPage('loginPage');
+            }
+        };
+
+        // Cart System
+        function updateCart() {
+            localStorage.setItem('cart', JSON.stringify(cart));
+            document.getElementById('cartCount').textContent = cart.reduce((acc, item) => acc + item.quantity, 0);
+            
+            const cartItems = document.getElementById('cartItems');
+            cartItems.innerHTML = cart.map(item => `
+                <div class="cart-item">
+                    <div>
+                        <h3>${item.name}</h3>
+                        <p>$${item.price} × ${item.quantity}</p>
+                    </div>
+                    <button onclick="removeFromCart(${item.id})">Remove</button>
+                </div>
+            `).join('');
+            
+            const total = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+            document.getElementById('cartTotal').innerHTML = `
+                <h2>Total: $${total.toFixed(2)}</h2>
+            `;
+        }
+
+        function addToCart(productId) {
+            const product = products.find(p => p.id === productId);
+            const cartItem = cart.find(item => item.id === productId);
+            
+            if (cartItem) {
+                cartItem.quantity++;
+            } else {
+                cart.push({ ...product, quantity: 1 });
+            }
+            
+            updateCart();
+        }
+
+        function removeFromCart(productId) {
+            cart = cart.filter(item => item.id !== productId);
+            updateCart();
+        }
+
+        // Checkout System
+        function checkout() {
+            if (!auth.isLoggedIn()) {
+                showPage('loginPage');
+                document.getElementById('loginError').textContent = 'Please login to checkout';
+                return;
+            }
+            showPage('paymentPage');
+        }
+
+        // Form Handlers
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            const user = users.find(u => 
+                u.username === document.getElementById('username').value && 
+                u.password === document.getElementById('password').value
+            );
+            
+            if (!user) {
+                document.getElementById('loginError').textContent = 'Invalid username or password';
+                return;
+            }
+            
+            auth.login(user.username);
+            showPage('homePage');
+        });
+
+        document.getElementById('signupForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('newUsername').value;
+            const password = document.getElementById('newPassword').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            
+            if (password !== confirmPassword) {
+                document.getElementById('signupError').textContent = 'Passwords do not match';
+                return;
+            }
+            
+            const users = JSON.parse(localStorage.getItem('users')) || [];
+            if (users.some(u => u.username === username)) {
+                document.getElementById('signupError').textContent = 'Username already exists';
+                return;
+            }
+            
+            users.push({ username, password });
+            localStorage.setItem('users', JSON.stringify(users));
+            alert('Account created successfully!');
+            showPage('loginPage');
+        });
+
+        document.getElementById('paymentForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const cardNumber = document.getElementById('cardNumber').value;
+            const expiryDate = document.getElementById('expiryDate').value;
+            const cvv = document.getElementById('cvv').value;
+            
+            if (!validatePayment(cardNumber, expiryDate, cvv)) {
+                document.getElementById('paymentError').textContent = 'Invalid payment details';
+                return;
+            }
+            
+            // Record sale
+            sales.push({
+                date: new Date().toISOString(),
+                user: currentUser,
+                items: cart,
+                total: cart.reduce((acc, item) => acc + (item.price * item.quantity), 0)
+            });
+            
+            localStorage.setItem('sales', JSON.stringify(sales));
+            
+            // Update product stock
+            cart.forEach(cartItem => {
+                const product = products.find(p => p.id === cartItem.id);
+                product.stock -= cartItem.quantity;
+                product.sold += cartItem.quantity;
+            });
+            
+            cart = [];
+            localStorage.removeItem('cart');
+            
+            document.getElementById('paymentForm').innerHTML = `
+                <div class="success-checkmark"></div>
+                <h2 style="text-align: center; margin-top: 2rem;">Payment Successful!</h2>
+                <p style="text-align: center;">Thank you for your purchase!</p>
+            `;
+            
+            setTimeout(() => showPage('homePage'), 3000);
+        });
+
+        function showPage(pageId) {
+            document.querySelectorAll('.page').forEach(page => page.classList.remove('active'));
+            document.getElementById(pageId).classList.add('active');
+            
+            if (pageId === 'shopPage') {
+                renderProducts();
+            }
+            if (pageId === 'cartPage') {
+                updateCart();
+            }
+        }
+
+        function validatePayment(card, expiry, cvv) {
+            return /^\d{16}$/.test(card) && 
+                   /^(0[1-9]|1[0-2])\/?([0-9]{2})$/.test(expiry) && 
+                   /^\d{3}$/.test(cvv);
+        }
+
+        function renderProducts() {
+            document.getElementById('productGrid').innerHTML = products.map(product => `
+                <div class="product-card">
+                    <img src="${product.image}" class="product-image" alt="${product.name}">
+                    <div class="product-info">
+                        <h3>${product.name}</h3>
+                        <p>$${product.price}</p>
+                        <button onclick="addToCart(${product.id})">Add to Cart</button>
+                        ${product.stock < 5 ? `<p style="color: ${product.stock < 1 ? 'var(--accent)' : 'var(--success)'};">
+                            ${product.stock < 1 ? 'Out of stock' : `${product.stock} left`}
+                        </p>` : ''}
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Initialize
+        auth.updateUI();
+        renderProducts();
+        updateCart();
+        showPage('homePage');
+    </script>
 </body>
 </html>
